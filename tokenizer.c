@@ -1,32 +1,29 @@
-// tokenizer.c
-
- 
+/*
+ * tokenizer.c
+ */
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-
-
 /*
  * Tokenizer type.  You need to fill in the type as part of your implementation.
  */
 
-struct TokenizerT_ {
- char *tsPtr;
- char *tsPtr2;
- char *sepPtr;
- char *token;
- char *sepArray;
- char *tsArray;
+struct TokenizerT_ 
+{
+	char *token;		//ouput
+	char *strArray;
+	char *sep;
+	
+	
 };
 
-typedef struct TokenizerT_ TokenizerT; //Calls the struct TokenizerT(Object)
-
+typedef struct TokenizerT_ TokenizerT;
 
 /*
- * TKCreate creates a new TokenizerT object for a given set of separator
- * characters (given as a string) and a token stream (given as a string).
+ * TKCreate creates a new TokenizerT object for a given token stream
+ * (given as a string).
  * 
- * TKCreate should copy the two arguments so that it is not dependent on
+ * TKCreate should copy the arguments so that it is not dependent on
  * them staying immutable after returning.  (In the future, this may change
  * to increase efficiency.)
  *
@@ -36,21 +33,15 @@ typedef struct TokenizerT_ TokenizerT; //Calls the struct TokenizerT(Object)
  * You need to fill in this function as part of your implementation.
  */
 
-TokenizerT *TKCreate(char *separators, char *ts) {
-	
+TokenizerT *TKCreate( char *separators,char * ts ) 
+{
 	TokenizerT *tokenizer = malloc(sizeof(struct TokenizerT_));
-	tokenizer->sepArray = malloc(sizeof(char)*strlen(separators)+1);
-	tokenizer->tsArray = malloc(sizeof(char)*strlen(ts)+1);
-	
-	strcpy(tokenizer->sepArray,separators);
-	strcpy(tokenizer->tsArray,ts);
-	
-	tokenizer->tsPtr = tokenizer->tsArray; // gets delims
-	tokenizer->tsPtr2 = tokenizer->tsArray; //holds starting place
-	
-	printf("Separators: %s\n", tokenizer->sepArray);
-	printf("Token String: %s\n", tokenizer->tsArray);
-  return tokenizer;
+	tokenizer->sep = malloc(sizeof(char)*strlen(separators)+1);
+	tokenizer->strArray = malloc(sizeof(char)*strlen(ts)+1);
+	strcpy(tokenizer->strArray,ts);
+	strcpy(tokenizer->sep,separators);
+
+  return NULL;
 }
 
 /*
@@ -60,11 +51,11 @@ TokenizerT *TKCreate(char *separators, char *ts) {
  * You need to fill in this function as part of your implementation.
  */
 
-void TKDestroy(TokenizerT *tk)
+void TKDestroy( TokenizerT * tk ) 
 {
-	free(tk->sepArray);
-	free(tk->tsArray);
-	free(tk);
+	free (tk->token);
+	free (tk->strArray);
+	free (tk->sep);
 }
 
 /*
@@ -79,70 +70,33 @@ void TKDestroy(TokenizerT *tk)
  * You need to fill in this function as part of your implementation.
  */
 
-char *TKGetNextToken(TokenizerT *tk){
-	tk->sepPtr = tk->sepArray;
+char *TKGetNextToken( TokenizerT * tk ) 
+{
+	int length = (strlen(tk->strArray)+1);
+	int i;
+	for(i=0; i<length; i++)
+	{
+		if(tk->strArray== tk->sep)
+		{
+			
+			
+			
+		}
+		(tk->strArray)++;
+	}
+	
 
-	int length=0;
-		
-	while(((tk->sepPtr && tk->tsPtr) != '\0') || NULL)
-	{
-		tk->tsPtr = strpbrk(tk->tsPtr,tk->sepPtr); //pointer to the first separator.
-		
-		if(tk->tsPtr == tk->tsPtr2)	//if the first element in ts is a separator
-		{
-			tk->tsPtr2++;
-			tk->tsPtr = strpbrk(++tk->tsPtr, tk->sepPtr);
-		}
-		
-			else if(tk->tsPtr != NULL)
-		{
-			length = strlen(tk->tsPtr2) - strlen(tk->tsPtr);
-			tk->token = (char*)malloc(length+1);
-			strncpy(tk->token,tk->tsPtr2,length);
-			tk->token[length]= '\0';
-			tk->tsPtr2 = ++tk->tsPtr;
-			return tk->token;
-		}
-	}
-	if(tk->tsPtr == NULL && tk->tsPtr2[0] != '\0' )
-	{
-		tk->token = (char*)malloc(strlen(tk->tsPtr2)+1);
-		strcpy(tk->token, tk->tsPtr2);
-		tk->token[strlen(tk->tsPtr2)] = '\0';
-		tk->tsPtr2[0] ='\0';
-		return tk->token;	
-	}
-	return NULL; 
+  return NULL;
 }
 
 /*
- * main will have two string arguments (in argv[1] and argv[2]).
- * The first string contains the separator characters.
- * The second string contains the tokens.
+ * main will have a string argument (in argv[1]).
+ * The string argument contains the tokens.
  * Print out the tokens in the second string in left-to-right order.
  * Each token should be printed on a separate line.
  */
 
 int main(int argc, char **argv) {
-	char *tokens;
-	argv[1]=" ";
-	argv[2]="Hello World My Name Is Mina Gadallah And I'm Testing This Code";
-	argc= 3;
-	if(argc<3){
-		printf("You need more arguments you have: %d\n", argc);
-		return 1;
-	}
-	
-	TokenizerT *tk = TKCreate(argv[1], argv[2]);
-	do{
-		tokens = TKGetNextToken(tk);
-		if(tokens != NULL)
-		{
-		printf("main token: %s\n", tokens);
-		free(tokens);
-		}
-	}
-    while(tokens != NULL);		//check if token == NULL
-	TKDestroy(tk);
+
   return 0;
 }
