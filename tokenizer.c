@@ -76,9 +76,10 @@ char *TKGetNextToken( TokenizerT * tk )
 	int i;
 	for(i=0; i<length; i++)
 	{
-		if(tk->strArray== tk->sep)
+		if(tk->strArray != tk->sep)
 		{
-			
+  	      strcpy(tk->token,tk->strArray);           
+          (tk->token)++;
 			
 			
 		}
