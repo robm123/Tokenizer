@@ -85,6 +85,7 @@ char *TKGetNextToken( TokenizerT * tk )
 
 	for(i=0; i<=ff; i++)
 	{
+<<<<<<< HEAD
 	
 		 if(*tk->strArray==*tk->sep || check(*tk->strArray)==1)
 		{
@@ -108,6 +109,12 @@ char *TKGetNextToken( TokenizerT * tk )
 			}
 			
 			printf("\n");
+=======
+		if(tk->strArray != tk->sep)
+		{
+  	      strcpy(tk->token,tk->strArray);           
+          (tk->token)++;
+>>>>>>> origin/master
 			
 			
 		}
