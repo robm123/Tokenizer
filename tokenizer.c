@@ -4,6 +4,9 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+int check(char k);
+void printChar(char k2);
+
 /*
  * Tokenizer type.  You need to fill in the type as part of your implementation.
  */
@@ -18,7 +21,6 @@ struct TokenizerT_
 };
 
 typedef struct TokenizerT_ TokenizerT;
-
 /*
  * TKCreate creates a new TokenizerT object for a given token stream
  * (given as a string).
@@ -33,7 +35,7 @@ typedef struct TokenizerT_ TokenizerT;
  * You need to fill in this function as part of your implementation.
  */
 
-TokenizerT *TKCreate( char *separators,char * ts ) 
+TokenizerT *TKCreate( char *separators,char *ts ) 
 {
 	TokenizerT *tokenizer = malloc(sizeof(struct TokenizerT_));
 	tokenizer->sep = malloc(sizeof(char)*strlen(separators)+1);
@@ -41,7 +43,7 @@ TokenizerT *TKCreate( char *separators,char * ts )
 	strcpy(tokenizer->strArray,ts);
 	strcpy(tokenizer->sep,separators);
 
-  return NULL;
+  return tokenizer;
 }
 
 /*
@@ -72,21 +74,136 @@ void TKDestroy( TokenizerT * tk )
 
 char *TKGetNextToken( TokenizerT * tk ) 
 {
-	int length = (strlen(tk->strArray)+1);
+
+	char temp[100];
+	char *hhh="Hellooo";
 	int i;
-	for(i=0; i<length; i++)
+	int inc=0;
+	int counter=0;
+	int j=0;
+	int ff= strlen(tk->strArray);
+
+	for(i=0; i<=ff; i++)
 	{
-		if(tk->strArray== tk->sep)
+	
+		 if(*tk->strArray==*tk->sep || check(*tk->strArray)==1)
 		{
+			inc=-1;
+			for(j=0;j<=counter;j++)
+			{
+				printf("%c", temp[j]);
+				
+			}
+			counter=-2;
+			if(check(*tk->strArray)==1&&*(tk->strArray+1)==*tk->sep)	//look at that
+			{
+				printf("\n");
+				printChar(*tk->strArray);
+				*tk->strArray++;
+			}
+			else if(check(*tk->strArray)==1)
+			{
+				printf("\n");
+				printChar(*tk->strArray);
+			}
 			
+			printf("\n");
 			
 			
 		}
-		(tk->strArray)++;
+		
+		temp[inc] = *tk->strArray;
+		counter++;
+		*tk->strArray++;
+		inc++;
+		
 	}
+		
+		for(j=0;j<=(counter-1);j++)
+		{
+			printf("%c", temp[j]);
+		}
+		printf("\n");
+		
+		
 	
+	return 0;
+}
 
-  return NULL;
+
+// checks if there is a special charachter
+int check(char k)
+{
+
+
+	
+	if(k == '(')
+	{
+		return 1;
+	}	
+	else if(k==',')
+	{
+		return 1;
+	}
+
+	else if(k=='*')
+	{
+		return 1;
+	}	
+
+	else if(k==')')
+	{	
+		return 1;
+	}
+	else if(k=='{')
+	{	
+		return 1;
+	}
+	else if(k=='[')
+	{
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
+
+
+}
+
+void printChar(char k2)
+{
+
+	if(k2 == '(')
+	{
+		printf("(        open paren");
+		
+	}	
+	else if(k2==',')
+	{
+		printf(",        operator");
+		
+	}
+
+	else if(k2=='*')
+	{
+		printf("*        operator");
+		
+	}	
+
+	else if(k2==')')
+	{	
+		printf(")        close paren");
+	}
+	else if(k2=='{')
+	{	
+		printf("{        open Curly");
+	}
+	else if(k2=='[')
+	{
+		printf("[        square bracket");
+	}
+
 }
 
 /*
@@ -95,8 +212,18 @@ char *TKGetNextToken( TokenizerT * tk )
  * Print out the tokens in the second string in left-to-right order.
  * Each token should be printed on a separate line.
  */
+ int main()
+ {
 
-int main(int argc, char **argv) {
+ 	
+ 	char *f=" ";
+	char *w= "Hello) world";
+	
+	TokenizerT *hello;
+	hello =TKCreate(f,w);
+	TKGetNextToken(hello);
+	
+	return 0;
+ }
 
-  return 0;
-}
+
