@@ -86,55 +86,57 @@ char *TKGetNextToken( TokenizerT * tk )
 
 	for(i=0; i<=ff; i++)
 	{
+             temp[inc] = *tk->strArray;
 		 if(*tk->strArray==*tk->sep || check(*tk->strArray)==1)
 		{
             counter2--;                      
 			inc=-1;
             for(j=0;j<=counter;j++)
 			{
-				printf("%c", temp[j]);
-				
+				printf("%c", temp[j]);	
 			}
 			
-			
-			
-			if(*tk->strArray==*tk->sep){
-            
-			while(*tk->strArray==*tk->sep)
-			{
-             *(tk->strArray++);
-             counter2++;
-            }
+			if(*tk->strArray==*tk->sep) //If there is a sequance sepreators  
+            {
+			     while(*tk->strArray==*tk->sep)//while it's followed by a seprator
+			     {
+                      *(tk->strArray++);//increment the pointer to the next char
+                      counter2++;    //counter of the seprator to be subtracted from the number of chars               
+                 }
              *tk->strArray--;
              }
              
   
 			
 			counter=-2;
-			if(check(*tk->strArray)==1&&*(tk->strArray+1)==*tk->sep)	//look at that
+			while(check(*tk->strArray)==1&&*(tk->strArray+1)==*tk->sep)	//look at that
 			{
+                
+               
+                
+                 
 				printf("\n");
 				printChar(*tk->strArray);
 				*tk->strArray++;
 			}
-			else if(check(*tk->strArray)==1)
+	/*		else if(check(*tk->strArray)==1)
 			{
 				printf("\n");
 				printChar(*tk->strArray);
-			}
+			}*/
 			
 			printf("\n");
 			
 			
 		}
 		
-		temp[inc] = *tk->strArray;
+	//	temp[inc] = *tk->strArray;
 		counter++;
 		*tk->strArray++;
 		inc++;
 		
 	}
-	//	counter=counter-counter2;
+	
 		for(j=0;j<=(counter-counter2);j++)
 		{
 			printf("%c", temp[j]);
@@ -233,7 +235,7 @@ void printChar(char k2)
 
  	
  	char *f=" ";
-	char *w= "Hello world               my name          is mina";
+	char *w= "hey g(uys)     this is just a test";
 	
 	TokenizerT *hello;
 	hello =TKCreate(f,w);
