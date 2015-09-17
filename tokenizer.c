@@ -80,20 +80,36 @@ char *TKGetNextToken( TokenizerT * tk )
 	int i;
 	int inc=0;
 	int counter=0;
+	int counter2=0;
 	int j=0;
 	int ff= strlen(tk->strArray);
 
 	for(i=0; i<=ff; i++)
 	{
-	
 		 if(*tk->strArray==*tk->sep || check(*tk->strArray)==1)
 		{
+            counter2--;                      
 			inc=-1;
-			for(j=0;j<=counter;j++)
+            for(j=0;j<=counter;j++)
 			{
 				printf("%c", temp[j]);
 				
 			}
+			
+			
+			
+			if(*tk->strArray==*tk->sep){
+            
+			while(*tk->strArray==*tk->sep)
+			{
+             *(tk->strArray++);
+             counter2++;
+            }
+             *tk->strArray--;
+             }
+             
+  
+			
 			counter=-2;
 			if(check(*tk->strArray)==1&&*(tk->strArray+1)==*tk->sep)	//look at that
 			{
@@ -118,8 +134,8 @@ char *TKGetNextToken( TokenizerT * tk )
 		inc++;
 		
 	}
-		
-		for(j=0;j<=(counter-1);j++)
+	//	counter=counter-counter2;
+		for(j=0;j<=(counter-counter2);j++)
 		{
 			printf("%c", temp[j]);
 		}
@@ -217,13 +233,13 @@ void printChar(char k2)
 
  	
  	char *f=" ";
-	char *w= "Hello) world";
+	char *w= "Hello world               my name          is mina";
 	
 	TokenizerT *hello;
 	hello =TKCreate(f,w);
 	TKGetNextToken(hello);
 	
-	
+	while(1){}
 	return 0;
  }
 
